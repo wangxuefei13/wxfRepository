@@ -6,6 +6,6 @@
 		<package name="com.crm.entity" />
 	</typeAliases>
 	<mappers>
-		<mapper resource="com/crm/dao/PersonMapper.xml" />
+		<mapper resource="com/crm/dao/UserDao.xml" />
 	</mappers>
 </configuration>
