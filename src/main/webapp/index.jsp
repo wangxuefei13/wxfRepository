@@ -15,6 +15,8 @@
     <title>Title</title>
 </head>
 <body>
-<a href="personList">userAll</a>
+<script>
+    document.location.href="login.jsp";
+</script>
 </body>
 </html>
