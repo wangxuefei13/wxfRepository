@@ -14,7 +14,7 @@
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
     
     <!--开启注解扫描 希望处理service和dao,controller不需要spring框架去处理-->
-    <context:component-scan base-package="com.crm">
+    <context:component-scan base-package="com.crm.*">
         <!--配置那些注解不扫描-->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
@@ -30,7 +30,9 @@
     <!--配置工厂对象SqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="comboPooledDataSource"/>
+        <property name="configLocation" value="classpath:configuration.xml" />
     </bean>
+
     <!--配置accountDao接口所在的包-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.crm.dao"/>

@@ -1,12 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Bokhoo
-  Date: 2020/10/29
-  Time: 10:24
+  User: 46687
+  Date: 2020/12/2
+  Time: 16:19
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 %>
@@ -16,6 +15,6 @@
     <title>Title</title>
 </head>
 <body>
-    ${user}
+<a href="personList">userAll</a>
 </body>
 </html>
