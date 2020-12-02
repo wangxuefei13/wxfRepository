@@ -23,9 +23,9 @@
     <!--配置连接池-->
     <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql:///crm"/>
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.43.218/hiber"/>
         <property name="user" value="root"/>
-        <property name="password" value="3726445"/>
+        <property name="password" value="root"/>
     </bean>
     <!--配置工厂对象SqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
