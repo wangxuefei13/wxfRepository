@@ -22,5 +22,8 @@ public class UserController {
         mv.addObject("user",one);
 
         return mv;
+
     }
+
+
 }
