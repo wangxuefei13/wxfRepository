@@ -1,3 +1,5 @@
+import com.crm.utils.DateTimeUtils;
+
 public class test {
 
 
@@ -6,6 +8,8 @@ public class test {
         //失效时间
         String expireTime = "2018-08-10 10:10:10";
         //当前系统时间
-
+        String currenTime = DateTimeUtils.getSysTime();
+        int count = expireTime.compareTo(currenTime);
+        System.out.println( );
     }
 }
