@@ -1,24 +1,22 @@
 package com.crm.controller;
 
-import com.crm.entity.Activity;
-import com.crm.service.ActivityService;
-import org.springframework.stereotype.Controller;
+import com.crm.entity.User;
+import com.crm.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Controller
+@RestController
 public class ActivityController {
-   @Resource(name = "activityService")
-    private ActivityService activityService;
-    @RequestMapping("/activityList")
-    public ModelAndView activityList(){
-        List<Activity> list = activityService.activityAll();
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("list",list);
-        mv.setViewName("index");
-        return mv;
+    @Autowired
+    private UserService userService;
+    @RequestMapping("/getPersonList")
+    public @ResponseBody List<User> getPersonList(){
+        List<User> one = userService.getOne();
+        System.out.println(one);
+        return one;
     }
 }

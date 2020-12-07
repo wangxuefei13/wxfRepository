@@ -11,14 +11,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-    @Override
-    public List<User> userAll() {
-        return userDao.userAll();
-    }
 
     @Override
-    public User getOne(String id) {
-
-        return userDao.getOne(id);
+    public List<User> getOne() {
+        return userDao.getOne();
     }
 }
