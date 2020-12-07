@@ -24,11 +24,11 @@ public class LoginController {
     @RequestMapping( "/login")
     public String personList(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam("loginAct") String loginAct, @RequestParam("loginPwd") String loginPwd) throws LoginException, ServletException, IOException {
         String md5 = MD5UTils.getMD5(loginPwd);
-
         User user = null;
         try{
             user = loginService.login(loginAct, md5);
         }catch (LoginException e){
+
             String message = e.getMessage();
             request.setAttribute("msg",message);
             System.out.println(message);
@@ -37,7 +37,6 @@ public class LoginController {
         }
 
         model.addAttribute("user", user);
-        System.out.println(user);
         request.getSession().setAttribute(Constantstatement.SESSION_LOGIN_USER,user);
         return "redirect: /workbench/index.jsp";
     }

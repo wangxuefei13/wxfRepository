@@ -35,8 +35,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</div>
 					<div class="checkbox"  style="position: relative;top: 30px; left: 10px;">
 						
-							<span id="msg" style="color: red"></span>
-						
+							<span id="msg" style="color: red" >${requestScope.msg}</span>
+
 					</div>
 					<button type="submit" id="submibtn" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
 				</div>
