@@ -7,5 +7,6 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/LoginMapper.xml" />
 	</mappers>
 </configuration>

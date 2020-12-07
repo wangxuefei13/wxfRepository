@@ -1,4 +1,5 @@
 import com.crm.utils.DateTimeUtils;
+import com.crm.utils.MD5UTils;
 
 public class test {
 
@@ -11,5 +12,8 @@ public class test {
         String currenTime = DateTimeUtils.getSysTime();
         int count = expireTime.compareTo(currenTime);
         System.out.println( );
+
+        String str  = MD5UTils.getMD5("123");
+        System.out.println(str);
     }
 }

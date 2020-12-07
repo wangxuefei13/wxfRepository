@@ -16,7 +16,7 @@
     </context:component-scan>
     <!--视图解析器-->
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/workbench/html/"/>
+        <property name="prefix" value="/workbench/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--过滤静态资源-->

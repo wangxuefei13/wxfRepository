@@ -26,7 +26,7 @@
     <!--配置连接池-->
     <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://192.168.43.33/mont"/>
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.43.99/mont"/>
         <property name="user" value="root"/>
         <property name="password" value="1234"/>
     </bean>
