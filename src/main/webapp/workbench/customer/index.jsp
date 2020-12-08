@@ -36,7 +36,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				dataType : "json",
 				success : function (data) {
 					console.log(data);
-					var html = "<option></option>";
+					var html = "";
 					//遍历出的每个n,就是每一个user对象
 					$.each(data,function(i,n){
 						html += "<option value='"+n.id+"'>"+n.name+"</option>";
@@ -161,7 +161,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<form class="form-horizontal" role="form">
 					
 						<div class="form-group">
-							<label for="edit-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-customerOwner" class="col-sm-2 control-ldeabel">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="edit-customerOwner">
 								  <option>zhangsan</option>
