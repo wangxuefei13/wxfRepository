@@ -45,8 +45,48 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				}
 			})
 		})
+		//页面加载完毕后触发一个方法
+		pageList(1,2);
+		//未查询按钮绑定事件，触发pageList方法
+		$("#searchBtn").click(function () {
+			pageList(1,2);
+		})
 	});
-	
+	/*
+	对于所有的关系型数据库，做前端的分页相关操作的基础组件
+	pageNo：页码
+	pageSize：每页展示的记录条数
+	 */
+	function pageList(pageNo,pageSize) {
+		$.ajax({
+			url:"paging",
+			data:{
+				"pageNo":pageNo,
+				"pageSize":pageSize,
+				"name1":$.trim($("#search-name1").val()),
+				"owner1":$.trim($("#search-owner1").val()),
+				"startData":$.trim($("#search-startDate").val()),
+				"endData":$.trim($("#search-endDate").val()),
+			},
+			type:"get",
+			dataType:"json",
+			success:function (data) {
+				console.log(data.dataList);
+				var html="";
+				// dataList后台传过来的市场活动
+				$.each(data.dataList,function (i,n) {
+					html+='<tr class="active">';
+					html+='<td><input type="checkbox" value="n.id"/></td>';
+					html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.html\';">'+n.name+'</a></td>';
+					html+='<td>'+n.owner+'</td>';
+					html+='<td>'+n.startDate+'</td>';
+					html+='<td>'+n.endDate+'</td>';
+					html+='</tr>';
+				})
+				$("#activityBody").html(html);
+			}
+		})
+	}
 </script>
 </head>
 <body>
@@ -197,14 +237,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-name1">
 				    </div>
 				  </div>
-				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-owner1">
 				    </div>
 				  </div>
 
@@ -212,17 +251,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="startTime" />
+					  <input class="form-control" type="text" id="search-startDate" />
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="endTime">
+					  <input class="form-control" type="text" id="search-endDate">
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" id="searchBtn" class="btn btn-default">查询</button>
 				  
 				</form>
 			</div>
@@ -245,21 +284,21 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td>结束日期</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="active">
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>
-                            <td>zhangsan</td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>
-                            <td>zhangsan</td>
-                            <td>2020-10-10</td>
-                            <td>2020-10-20</td>
-                        </tr>
+					<tbody id="activityBody">
+<%--						<tr class="active">--%>
+<%--							<td><input type="checkbox" /></td>--%>
+<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>--%>
+<%--                            <td>zhangsan</td>--%>
+<%--							<td>2020-10-10</td>--%>
+<%--							<td>2020-10-20</td>--%>
+<%--						</tr>--%>
+<%--                        <tr class="active">--%>
+<%--                            <td><input type="checkbox" /></td>--%>
+<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>--%>
+<%--                            <td>zhangsan</td>--%>
+<%--                            <td>2020-10-10</td>--%>
+<%--                            <td>2020-10-20</td>--%>
+<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>

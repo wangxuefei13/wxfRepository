@@ -8,5 +8,6 @@
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/LoginMapper.xml" />
+		<mapper resource="mapper/PagingMapper.xml" />
 	</mappers>
 </configuration>
