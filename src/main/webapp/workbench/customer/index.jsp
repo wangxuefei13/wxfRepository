@@ -55,6 +55,38 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		//点击创建模态框里面的保存。向后台传送数据并请求保存
 		$("#addSave").click(function () {
 			alert("13245")
+
+            $.ajax({
+                url : "addCustomer",
+                date:{
+                    "name" :$.trim($("create-name").val()),
+                    "website" :$.trim($("create-website").val()),
+                    "phone" :$.trim($("create-phone").val()),
+                    "description" :$.trim($("create-description").val()),
+                    "contactSummary" :$.trim($("create-contactSummary").val()),
+                    "nextContactTime" :$.trim($("create-nextContactTime").val()),
+                    "address" :$.trim($("create-address").val())
+
+                },
+                type : "post",
+                dataType : "json",
+                success : function (data) {
+                    /**
+                     * data
+                     *      {"success":true/false}
+                     */
+                    if(data.success){
+                        //添加成功后
+                        //刷新客户列表（局部刷新）
+
+                        //关闭添加操作的模态窗口
+                        $("#createCustomerModal").modal("hide");
+
+                    }else{
+                        alert("添加失败")
+                    }
+                }
+            })
 		})
 
 
@@ -89,7 +121,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							</div>
 							<label for="create-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-customerName">
+								<input type="text" class="form-control" id="create-name">
 							</div>
 						</div>
 						
@@ -106,7 +138,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<div class="form-group">
 							<label for="create-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="create-describe"></textarea>
+								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
 						</div>
 						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
@@ -132,7 +164,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-address1" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address1"></textarea>
+                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
                                 </div>
                             </div>
                         </div>
