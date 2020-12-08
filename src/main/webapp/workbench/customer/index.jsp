@@ -44,7 +44,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					$("#create-owner").html(html);
 					//取得当前用户id
 					//在js中使用el表达式,el表达式套用在字符串中
-					var id ="1";
+					var id ="${user.id}";
 
 					$("#create-owner").val(id);
 					//所有者下拉框处理完毕后,展现模态窗口
