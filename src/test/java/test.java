@@ -17,7 +17,7 @@ public class test {
         String str  = MD5UTils.getMD5("123");
         System.out.println(str);*/
         String uu = "";
-                 UUIDUtils.uu("uu");
+                 UUIDUtils.getEncryption_ID("uu");
         System.out.println(uu);
 
 

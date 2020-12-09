@@ -24,16 +24,21 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 	$(function(){
 		$("#addBtn").click(function(){
-			//alert("123");
-			//$("#createActivityModal").modal("show");
+			$(".time").datetimepicker({
+				minView: "month",
+				language:  'zh-CN',
+				format: 'yyyy-mm-dd',
+				autoclose: true,
+				todayBtn: true,
+				pickerPosition: "bottom-left"
+			});
 
 			$.ajax({
 				url : "getPersonList",
 				type : "get",
 				dataType : "json",
 				success : function (data) {
-					console.log(data);
-					var html = "<option></option>";
+					var html = "";
 					//遍历出的每个n,就是每一个user对象
 					$.each(data,function(i,n){
 						html += "<option value='"+n.id+"'>"+n.name+"</option>";
@@ -41,13 +46,45 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					$("#create-owner").html(html);
 					//取得当前用户id
 					//在js中使用el表达式,el表达式套用在字符串中
-					var id ="李四";
-
+					var id ="${user.id}";
 					$("#create-owner").val(id);
 					//所有者下拉框处理完毕后,展现模态窗口
 					$("#createActivityModal").modal("show");
 				}
 			})
+			//保存按钮执行添加操作
+			$("#saveBtn").click(function () {
+				$.ajax({
+					url: "save",
+					data :{
+						"owner" : $.trim($("#create-owner").val()),
+						"name" : $.trim($("#create-name").val()),
+						"startDate" : $.trim($("#create-startDate").val()),
+						"endDate" : $.trim($("#create-endDate").val()),
+						"cost" : $.trim($("#create-cost").val()),
+						"description" : $.trim($("#create-description").val()),
+					},
+					type: "post",
+					dataType: "json",
+					success : function (data) {
+						console.log(data)
+						if (data==true){
+							//添加成功后
+							//刷新市场活动信息列表(局部刷新)
+							//清空添加操作模态窗口的数据
+							//提交表单
+							$("#activityAddForm")[0].reset();
+
+							//关闭模态窗口
+							$("#createActivityModal").modal("hide");
+						}else {
+							alert("添加市场活动失败")
+						}
+					}
+				})
+
+			})
+
 		})
 		//页面加载完毕后触发一个方法
 		pageList(1,2);
@@ -144,8 +181,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-body">
 
-					<form class="form-horizontal" role="form">
-					
+					<form id="activityAddForm" class="form-horizontal" role="form">
 						<div class="form-group">
 							<label for="create-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -155,31 +191,32 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							</div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="create-marketActivityName">
+                                <input type="text" class="form-control" id="create-name">
                             </div>
 						</div>
 						
 						<div class="form-group">
 							<label for="create-startTime" class="col-sm-2 control-label">开始日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-startTime">
+								<input type="text" class="form-control time" id="create-startDate" autocomplete="off">
+								<!-- readonly input框无法选中 -->
 							</div>
 							<label for="create-endTime" class="col-sm-2 control-label">结束日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-endTime">
+								<input type="text" class="form-control time" id="create-endDate" autocomplete="off">
 							</div>
 						</div>
                         <div class="form-group">
 
                             <label for="create-cost" class="col-sm-2 control-label">成本</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="create-cost">
+                                <input type="text" class="form-control" id="create-cost" autocomplete="off">
                             </div>
                         </div>
 						<div class="form-group">
 							<label for="create-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="create-describe"></textarea>
+								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
 						</div>
 						
@@ -187,8 +224,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					
 				</div>
 				<div class="modal-footer">
+
+					<!--
+						data-dismiss="modal"
+						表示关闭模态窗口
+					-->
+
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-primary" id="saveBtn">保存</button>
 				</div>
 			</div>
 		</div>

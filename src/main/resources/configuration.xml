@@ -9,6 +9,7 @@
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/LoginMapper.xml" />
 		<mapper resource="mapper/PagingMapper.xml" />
+		<mapper resource="mapper/ActivityMapper.xml" />
 		<mapper resource="mapper/Dic_TypeMapper.xml" />
 	</mappers>
 </configuration>

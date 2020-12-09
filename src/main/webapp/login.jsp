@@ -11,6 +11,14 @@
 	<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 
+	<script>
+
+		$(function () {
+			if(window.top!=window){
+				window.top.location=window.location;
+			}
+		})
+	</script>
 </head>
 <body>
 <div style="position: absolute; top: 0px; left: 0px; width: 60%;">
