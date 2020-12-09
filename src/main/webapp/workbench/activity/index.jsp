@@ -53,6 +53,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		pageList(1,2);
 		//未查询按钮绑定事件，触发pageList方法
 		$("#searchBtn").click(function () {
+			//点击查询的时候我们应当把搜索框中的信息保存起来，保存到隐藏域中
+			$("#hidden-name").val($.trim($("#search-name1").val()));
+			$("#hidden-owner").val($.trim($("#search-owner1").val()));
+			$("#hidden-startDate").val($.trim($("#search-startDate").val()));
+			$("#hidden-endDate").val($.trim($("#search-endDate").val()));
+
 			pageList(1,2);
 		})
 	});
@@ -62,6 +68,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	pageSize：每页展示的记录条数
 	 */
 	function pageList(pageNo,pageSize) {
+		//查询前把隐藏域中的值取出来传进搜索框中
+		$("#search-name1").val($.trim($("#hidden-name").val()));
+		$("#search-owner1").val($.trim($("#hidden-owner").val()));
+		$("#search-startDate").val($.trim($("#hidden-startDate").val()));
+		$("#search-endDate").val($.trim($("#hidden-endDate").val()));
 		$.ajax({
 			url:"paging",
 			data:{
@@ -115,6 +126,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </script>
 </head>
 <body>
+<%--    隐藏域解决查询和下一页点击bug--%>
+	<input type="hidden" id="hidden-name">
+	<input type="hidden" id="hidden-owner">
+	<input type="hidden" id="hidden-startData">
+	<input type="hidden" id="hidden-endData">
 
 	<!-- 创建市场活动的模态窗口 -->
 	<div class="modal fade" id="createActivityModal" role="dialog">
@@ -127,7 +143,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<h4 class="modal-title" id="myModalLabel1">创建市场活动</h4>
 				</div>
 				<div class="modal-body">
-				
+
 					<form class="form-horizontal" role="form">
 					
 						<div class="form-group">
