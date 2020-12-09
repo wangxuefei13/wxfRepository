@@ -32,13 +32,11 @@ public class LoginController {
         }catch (LoginException e){
             String message = e.getMessage();
             request.setAttribute("msg",message);
-            System.out.println(message);
             request.getRequestDispatcher("/login.jsp").forward(request,response);
             return null;
         }
 
         model.addAttribute("user", user);
-        System.out.println(user);
         request.getSession().setAttribute(Constantstatement.SESSION_LOGIN_USER,user);
         return "redirect: /workbench/index.jsp";
     }

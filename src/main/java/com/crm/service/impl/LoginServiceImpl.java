@@ -18,7 +18,6 @@ public class LoginServiceImpl implements LoginService {
     public User login(String loginAct, String loginPwd) throws LoginException {
 
         User user = loginDao.login(loginAct, loginPwd);
-        System.out.println("user--------"+user);
         //判断账户密码
         if (user==null){
             throw new LoginException(Constantstatement.EXCEPTION_MESSAGE);

@@ -5,11 +5,12 @@ import java.util.UUID;
 public class UUIDUtils {
     public static void main(String[] args) {
         UUIDUtils ud = new UUIDUtils();
-        ud.uu(123);
+        ud.uu("123");
     }
-    public static String uu(int i){
+    public static String uu(String i){
         String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
         System.out.println(uuid);
         return uuid;
     }
+
 }
