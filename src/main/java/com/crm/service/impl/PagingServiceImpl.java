@@ -17,6 +17,7 @@ public class PagingServiceImpl implements PagingService {
     private PagingDao pagingDao;
     @Override
     public PaginationVO<Activity> paging(Map<String, Object> map) {
+        System.out.println("进入service"+map);
         //获取dataList
         List<Activity> dataList = pagingDao.getActivityListByCondition(map);
         System.out.println("获取dataList"+dataList);

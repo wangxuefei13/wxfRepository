@@ -22,12 +22,10 @@ public class PagingController {
             @RequestParam(value = "owner1", required = false) String owner,
             @RequestParam(value = "startDate", required = false)String startDate,
             @RequestParam(value = "endDate", required = false)String endDate){
-
         int pageNo1 = Integer.valueOf(pageNo);
         int pageSize1 = Integer.valueOf(pageSize);
         //计算出略过的记录数
         int skipCount=(pageNo1-1)*pageSize1;
-
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("name",name);
         map.put("owner",owner);

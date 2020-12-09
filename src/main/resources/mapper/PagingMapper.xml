@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crm.dao.PagingDao">
-	<select id="getTotalByCondition" resultType="int">
+	<select id="getTotalByCondition" databaseId="MySQL" resultType="int">
 		select count(*)
 		from tbl_activity a
 		join tbl_user u
@@ -22,7 +22,7 @@
 			</if>
 		</where>
 	</select>
-	<select id="getActivityListByCondition" resultType="com.crm.entity.Activity">
+	<select id="getActivityListByCondition"  databaseId="MySQL" parameterType="map" resultType="com.crm.entity.Activity">
 		select
 		a.id,
 		a.name,
