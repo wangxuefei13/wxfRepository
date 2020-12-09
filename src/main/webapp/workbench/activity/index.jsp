@@ -98,6 +98,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 			pageList(1,2);
 		})
+        //为全选的复选框绑定事件，触发全选操作
+        $("#qx").click(function () {
+            $("input[name=xz]").prop("checked",this.checked)
+        })
+        $("#activityBody").on("click",$("input[name=xz]"),function () {
+            $("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+        })
 	});
 	/*
 	对于所有的关系型数据库，做前端的分页相关操作的基础组件
@@ -128,7 +135,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				$.each(data.dataList,function (i,n) {
 					console.log(data.dataList)
 					html+='<tr class="active">';
-					html+='<td><input type="checkbox" value="n.id"/></td>';
+					html+='<td><input type="checkbox" name="xz" value="n.id"/></td>';
 					html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.html\';">'+n.name+'</a></td>';
 					html+='<td>'+n.owner+'</td>';
 					html+='<td>'+n.startDate+'</td>';
@@ -361,7 +368,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="qx"/></td>
 							<td>名称</td>
                             <td>所有者</td>
 							<td>开始日期</td>
