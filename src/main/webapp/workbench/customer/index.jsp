@@ -147,7 +147,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-contactSummary" class="col-sm-2 control-label">联系纪要</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="create-contactSummary"></textarea>
+                                    <textarea class="form-control" rows="3" id="create-contac  tSummary"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">

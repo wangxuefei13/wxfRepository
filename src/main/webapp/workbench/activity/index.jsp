@@ -24,6 +24,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 	$(function(){
 		$("#addBtn").click(function(){
+		    //日期  年-月-日
 			$(".time").datetimepicker({
 				minView: "month",
 				language:  'zh-CN',
@@ -32,7 +33,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				todayBtn: true,
 				pickerPosition: "bottom-left"
 			});
-
+            //查询user表传递到所有者下拉菜单
 			$.ajax({
 				url : "getPersonList",
 				type : "get",
@@ -52,7 +53,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					$("#createActivityModal").modal("show");
 				}
 			})
-			//保存按钮执行添加操作
+			//保存按钮执行添加操作(点击市场活动保存,添加ACTIVITY)
 			$("#saveBtn").click(function () {
 				$.ajax({
 					url: "save",
@@ -67,7 +68,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					type: "post",
 					dataType: "json",
 					success : function (data) {
-						console.log(data)
+						//console.log(data)
 						if (data==true){
 							//添加成功后
 							//刷新市场活动信息列表(局部刷新)
@@ -84,7 +85,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				})
 
 			})
-
 		})
 		//页面加载完毕后触发一个方法
 		pageList(1,2);
@@ -100,10 +100,51 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		})
         //为全选的复选框绑定事件，触发全选操作
         $("#qx").click(function () {
-            $("input[name=xz]").prop("checked",this.checked)
+            $("input[name=xz]").prop("checked",this.checked);
         })
         $("#activityBody").on("click",$("input[name=xz]"),function () {
             $("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+        })
+
+
+
+        //为删除按钮绑定事件,执行市场活动删除操作
+        $("#deleteBtn").click(function () {
+            //找到复选框中所有挑√的复选框的jquery对象
+            var $xz = $("input[name=xz]:checked");
+            if ($xz.length==0){
+                alert("请选择需要删除的记录");
+                //肯定选择,而且可能是一条,也可能是多条
+            }else {
+                if (confirm("确定删除所选中的记录吗?")){
+                    //拼接函数
+                    var param = "";
+                    //将$xz中的每个dom对象遍历出来,取其value值,就相当于取得了需要删除的记录的id
+                    for (var i=0;i<$xz.length;i++){
+                        param += "id="+$($xz[i]).val();
+                        //如果不是最后一个元素,需要在后面加一个&符
+                        if (i<$xz.length-1){
+                            param += "&";
+                        }
+                    }
+                    //alert(param);
+                    $.ajax({
+                        url : "delete",
+                        data : param,
+                        type : "post",
+                        dataType : "json",
+                        success : function (data) {
+                            if (data==true){
+                                //删除成功后
+                                pageList(1,2);
+                            }else {
+                                alert("删除市场活动失败");
+                            }
+                        }
+                    })
+                }
+
+            }
         })
 	});
 	/*
@@ -112,6 +153,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	pageSize：每页展示的记录条数
 	 */
 	function pageList(pageNo,pageSize) {
+	    //将全选的复选框的√去除
+        $("#qx").prop("checked",false);
+
 		//查询前把隐藏域中的值取出来传进搜索框中
 		$("#search-name1").val($.trim($("#hidden-name").val()));
 		$("#search-owner1").val($.trim($("#hidden-owner").val()));
@@ -135,7 +179,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				$.each(data.dataList,function (i,n) {
 					console.log(data.dataList)
 					html+='<tr class="active">';
-					html+='<td><input type="checkbox" name="xz" value="n.id"/></td>';
+					html+='<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
 					html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.html\';">'+n.name+'</a></td>';
 					html+='<td>'+n.owner+'</td>';
 					html+='<td>'+n.startDate+'</td>';
@@ -360,7 +404,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				
 			</div>

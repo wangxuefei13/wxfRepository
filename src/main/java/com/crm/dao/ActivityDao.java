@@ -7,4 +7,6 @@ public interface ActivityDao {
 
     //添加
     int save(Activity activity);
+
+    int delete(String[] ids);
 }

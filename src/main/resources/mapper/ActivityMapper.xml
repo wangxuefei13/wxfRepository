@@ -7,4 +7,15 @@
         insert into tbl_activity (id,owner,name,startDate,endDate,cost,description,createTime,createBy) values (#{id},#{owner},#{name},#{startDate},
         #{endDate},#{cost},#{description},#{createTime},#{createBy})
     </insert>
+
+    <delete id="delete">
+
+        delete from tbl_activity
+
+        where id in
+
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

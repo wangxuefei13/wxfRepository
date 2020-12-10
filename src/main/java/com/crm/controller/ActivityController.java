@@ -60,4 +60,16 @@ public class ActivityController {
         boolean flag =activityService.save(activity);
         return flag;
     }
+
+    /**
+     *删除数据
+     * @return
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    private boolean delete(Activity activity,HttpServletRequest request){
+        String ids[] = request.getParameterValues("id");
+        boolean flag = activityService.delete(ids);
+        return flag;
+    }
 }
