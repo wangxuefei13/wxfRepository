@@ -4,6 +4,7 @@ import com.crm.entity.Customer;
 import com.crm.entity.User;
 import com.crm.service.CustomerService;
 import com.crm.service.UserService;
+import com.crm.utils.DateTimeUtils;
 import com.crm.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +38,17 @@ public class CustomerController {
     public boolean add(Customer customer, HttpServletRequest request){
         //添加数据库id
         String id =UUIDUtils.getEncryption_ID("uu");
+        String createTime = DateTimeUtils.getSysTime();
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
 
         customer.setId(id);
-        System.out.println(id);
+        customer.setCreateBy(createBy);
+        customer.setCreateTime(createTime);
+        System.out.println(createBy);
+        System.out.println(createTime);
+//        System.out.println(id);
         boolean flag = customerService.add(customer);
-        System.out.println(flag);
+//        System.out.println(flag);
         return flag;
     }
 

@@ -40,7 +40,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
             })
 
             $("#addSave").click(function () {
-                alert("aa")
+                // alert("aa")
                 $.ajax({
                     url: "add",
                     data: {

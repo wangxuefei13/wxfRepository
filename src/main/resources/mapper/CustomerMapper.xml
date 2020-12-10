@@ -5,7 +5,7 @@
 <mapper namespace="com.crm.dao.CustomerDao">
     <insert id="add"  parameterType="com.crm.entity.Customer">
         insert into tbl_customer (
-            id,owner,name,website,phone,contactSummary,nextContactTime,description,address
-        ) values (#{id},#{owner},#{name},#{website},#{phone},#{contactSummary},#{nextContactTime},#{description},#{address})
+            id,owner,name,website,phone,contactSummary,nextContactTime,description,address,createTime,createBy
+        ) values (#{id},#{owner},#{name},#{website},#{phone},#{contactSummary},#{nextContactTime},#{description},#{address},#{createTime},#{createBy})
     </insert>
 </mapper>
