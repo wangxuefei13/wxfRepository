@@ -9,7 +9,9 @@
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/LoginMapper.xml" />
 		<mapper resource="mapper/PagingMapper.xml" />
+		<mapper resource="mapper/ActivityMapper.xml" />
 		<mapper resource="mapper/Dic_TypeMapper.xml" />
 		<mapper resource="mapper/Dic_ValueMapper.xml" />
+		<mapper resource="mapper/CustomerMapper.xml"/>
 	</mappers>
 </configuration>

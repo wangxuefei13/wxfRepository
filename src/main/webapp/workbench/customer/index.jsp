@@ -54,31 +54,41 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		});
 		//点击创建模态框里面的保存。向后台传送数据并请求保存
 		$("#addSave").click(function () {
-			alert("13245")
-
+			// alert("13245")
+            var owner = $.trim($("#create-owner").val());
+            var name = $.trim($("#create-name").val());
+            var website = $.trim($("#create-website").val());
+            var phoen =$.trim($("#create-phone").val());
+            var contactSummary= $.trim($("#create-contactSummary").val());
+            var nextContactTime= $.trim($("#create-nextContactTime").val());
+            var description= $.trim($("#create-description").val());
+            var address= $.trim($("#create-address1").val());
+            console.log(owner+""+name+""+website+""+phoen+""+contactSummary+""+nextContactTime+""+description+""+address);
             $.ajax({
                 url : "addCustomer",
-                date:{
-                    "name" :$.trim($("create-name").val()),
-                    "website" :$.trim($("create-website").val()),
-                    "phone" :$.trim($("create-phone").val()),
-                    "description" :$.trim($("create-description").val()),
-                    "contactSummary" :$.trim($("create-contactSummary").val()),
-                    "nextContactTime" :$.trim($("create-nextContactTime").val()),
-                    "address" :$.trim($("create-address").val())
-
-                },
                 type : "post",
-                dataType : "json",
+                dataType : "application/json",
+                date: {
+                    "owner" :owner,
+                    "name" : name,
+                    "website": website ,
+                    "phone" : phoen,
+                    "contactSummary" :contactSummary,
+                    "nextContactTime" : nextContactTime,
+                    "description": description,
+                    "address": address
+                },
                 success : function (data) {
+
+                    alert($.trim($("#create-address1").val()));
                     /**
                      * data
                      *      {"success":true/false}
                      */
-                    if(data.success){
+                    if(data == true){
                         //添加成功后
                         //刷新客户列表（局部刷新）
-
+                        $("#customerAdd")[0].reset();
                         //关闭添加操作的模态窗口
                         $("#createCustomerModal").modal("hide");
 
@@ -108,7 +118,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<h4 class="modal-title" id="myModalLabel1">创建客户</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
+					<form id="customerAdd" class="form-horizontal" role="form">
 					
 						<div class="form-group">
 							<label for="create-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
@@ -164,7 +174,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-address1" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
+                                    <textarea class="form-control" rows="1" id="create-address1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +183,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" id="addSave">保存</button>
+					<button type="button" class="btn btn-primary"  id="addSave">保存</button>
 				</div>
 			</div>
 		</div>
@@ -248,7 +258,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-address" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address">北京大兴大族企业湾</textarea>
+                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
                                 </div>
                             </div>
                         </div>

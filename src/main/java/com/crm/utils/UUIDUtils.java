@@ -15,4 +15,10 @@ public class UUIDUtils {
     }
 
 
+
+    public static String uu(){
+        String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        System.out.println(uuid);
+        return uuid;
+    }
 }
