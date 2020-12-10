@@ -12,5 +12,6 @@
 		<mapper resource="mapper/ActivityMapper.xml" />
 		<mapper resource="mapper/Dic_TypeMapper.xml" />
 		<mapper resource="mapper/ActivityRemarkMapper.xml" />
+		<mapper resource="mapper/Dic_ValueMapper.xml" />
 	</mappers>
 </configuration>

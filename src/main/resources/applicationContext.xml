@@ -20,6 +20,7 @@
     <context:component-scan base-package="com.crm.*">
         <!--配置那些注解不扫描-->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+<!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
     </context:component-scan>
     <mvc:annotation-driven />
     <!--spirng整合mybatis-->
@@ -47,6 +48,10 @@
     <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="comboPooledDataSource"/>
     </bean>
+
+
+
+
     <!--配置事务的通知-->
     <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
         <tx:attributes>
