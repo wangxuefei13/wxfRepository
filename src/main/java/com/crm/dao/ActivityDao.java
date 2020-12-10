@@ -9,4 +9,8 @@ public interface ActivityDao {
     int save(Activity activity);
 
     int delete(String[] ids);
+
+    Activity getById(String id);
+
+    int updateActivity(Activity activity);
 }

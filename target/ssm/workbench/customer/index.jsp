@@ -18,79 +18,55 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript">
 
 	$(function(){
-
-		//定制字段
-		$("#definedColumns > li").click(function(e) {
-			//防止下拉菜单消失
-	        e.stopPropagation();
-	    });
-
-
-		//点击创建按钮获取所有者信息然后显示模态框
-		$("#addBtn").click(function () {
-			// alert("123");
-			// $("#createCustomerModal").modal("show");
-			$.ajax({
-				url : "getAuthority",
-				type : "get",
-				dataType : "json",
-				success : function (data) {
-					console.log(data);
-					var html = "";
-					//遍历出的每个n,就是每一个user对象
-					$.each(data,function(i,n){
-						html += "<option value='"+n.id+"'>"+n.name+"</option>";
-					})
-					$("#create-owner").html(html);
-					//取得当前用户id
-					//在js中使用el表达式,el表达式套用在字符串中
-					var id ="${user.id}";
-
-					$("#create-owner").val(id);
-					//所有者下拉框处理完毕后,展现模态窗口
-					$("#createCustomerModal").modal("show");
-				}
-			})
-		});
-		//点击创建模态框里面的保存。向后台传送数据并请求保存
-		$("#addSave").click(function () {
-			alert("13245")
-
+        $("#addBtn").click(function () {
             $.ajax({
-                url : "addCustomer",
-                date:{
-                    "name" :$.trim($("create-name").val()),
-                    "website" :$.trim($("create-website").val()),
-                    "phone" :$.trim($("create-phone").val()),
-                    "description" :$.trim($("create-description").val()),
-                    "contactSummary" :$.trim($("create-contactSummary").val()),
-                    "nextContactTime" :$.trim($("create-nextContactTime").val()),
-                    "address" :$.trim($("create-address").val())
-
-                },
-                type : "post",
+                url : "getPersonList",
+                type : "get",
                 dataType : "json",
                 success : function (data) {
-                    /**
-                     * data
-                     *      {"success":true/false}
-                     */
-                    if(data.success){
-                        //添加成功后
-                        //刷新客户列表（局部刷新）
-
-                        //关闭添加操作的模态窗口
-                        $("#createCustomerModal").modal("hide");
-
-                    }else{
-                        alert("添加失败")
-                    }
+                    var html = "";
+                    //遍历出的每个n,就是每一个user对象
+                    $.each(data,function(i,n){
+                        html += "<option value='"+n.id+"'>"+n.name+"</option>";
+                    })
+                    $("#create-owner").html(html);
+                    //取得当前用户id
+                    //在js中使用el表达式,el表达式套用在字符串中
+                    var id ="${user.id}";
+                    $("#create-owner").val(id);
+                    //所有者下拉框处理完毕后,展现模态窗口
+                    $("#createCustomerModal").modal("show");
                 }
             })
-		})
 
-
-		
+            $("#addSave").click(function () {
+                alert("aa")
+                $.ajax({
+                    url: "add",
+                    data: {
+                        "owner": $.trim($("#create-owner").val()),
+                        "name": $.trim($("#create-name").val()),
+                        "website": $.trim($("#create-website").val()),
+                        "phone": $.trim($("#create-phone").val()),
+                        "contactSummary": $.trim($("#create-contactSummary").val()),
+                        "nextContactTime": $.trim($("#create-nextContactTime").val()),
+                        "description": $.trim($("#create-description").val()),
+                        "address": $.trim($("#create-address1").val()),
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        //console.log(data)
+                        if (data == true) {
+                            //关闭模态窗口
+                            $("#createCustomerModal").modal("hide");
+                        } else {
+                            alert("添加市场活动失败")
+                        }
+                    }
+                })
+            })
+        })
 	});
 	
 </script>
@@ -147,7 +123,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-contactSummary" class="col-sm-2 control-label">联系纪要</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="create-contac  tSummary"></textarea>
+                                    <textarea class="form-control" rows="3" id="create-contactSummary"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -164,7 +140,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-address1" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
+                                    <textarea class="form-control" rows="1" id="create-address1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +149,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" id="addSave">保存</button>
+					<button type="button" class="btn btn-primary"  id="addSave">保存</button>
 				</div>
 			</div>
 		</div>

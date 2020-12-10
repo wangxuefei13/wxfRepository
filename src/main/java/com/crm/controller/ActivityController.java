@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ActivityController {
@@ -24,9 +25,6 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    private List<Activity> list;
-
-    private Activity activity;
     /**
      * 查询用户拥有的角色在前台展示
      * @return
@@ -34,10 +32,8 @@ public class ActivityController {
     @RequestMapping("/getPersonList")
     public @ResponseBody List<User> getPersonList(){
         List<User> one = userService.getOne();
-        //System.out.println(one);
         return one;
     }
-
 
     /**
      * 向后台添加用户
@@ -56,7 +52,6 @@ public class ActivityController {
         activity.setId(id);
         activity.setCreateTime(createTime);
         activity.setCreateBy(createBy);
-        //System.out.println(activity);
         boolean flag =activityService.save(activity);
         return flag;
     }
@@ -67,9 +62,42 @@ public class ActivityController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    private boolean delete(Activity activity,HttpServletRequest request){
+    private boolean delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
         boolean flag = activityService.delete(ids);
+        return flag;
+    }
+
+    /**
+     * 修改数据
+     * @return
+     */
+    @RequestMapping("/updateActivity")
+    private Map<String, Object> updateActivity(HttpServletRequest request){
+        String id =request.getParameter("id");
+        Map<String,Object> map =activityService.update(id);
+        System.out.println(map);
+        return map;
+    }
+
+    /**
+     * 市场活动修改操作
+     */
+    @RequestMapping("/update")
+    @ResponseBody
+    public boolean update(Activity activity, HttpServletRequest request){
+
+        String id =request.getParameter("id");
+        //当前修改的时间
+
+        String editTime = DateTimeUtils.getSysTime();
+        //当前修改用户
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        activity.setId(id);
+        activity.setCreateTime(editTime);
+        activity.setCreateBy(editBy);
+        boolean flag =activityService.updateActivity(activity);
         return flag;
     }
 }

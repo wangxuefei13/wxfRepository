@@ -72,6 +72,21 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						if (data==true){
 							//添加成功后
 							//刷新市场活动信息列表(局部刷新)
+                            //pageList(1,2);
+
+                            /*
+                            *($("#activityPage").bs_pagination('getOption', 'currentPage')
+                            * 操作后停留在当前页
+                            * $("#activityPage").bs_pagination('getOption', 'rowsPerPage')
+                            * 操作后维持已经设置好的每页展现的记录数
+                            *
+                            * 两个参数不需任何操作
+                            * 直接使用
+                            * */
+
+                            //做完操作后应回到第一页维持每页展现记录数
+                            pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+
 							//清空添加操作模态窗口的数据
 							//提交表单
 							$("#activityAddForm")[0].reset();
@@ -136,7 +151,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                         success : function (data) {
                             if (data==true){
                                 //删除成功后
-                                pageList(1,2);
+                                //回到第一页,维持每页展现的记录数
+                                //pageList(1,2);
+                                pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                             }else {
                                 alert("删除市场活动失败");
                             }
@@ -145,6 +162,90 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                 }
 
             }
+        })
+
+        //为修改按钮绑定事件,打开修改模态窗口
+        $("#editBtn").click(function () {
+            //日期  年-月-日
+            $(".time").datetimepicker({
+                minView: "month",
+                language:  'zh-CN',
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayBtn: true,
+                pickerPosition: "bottom-left"
+            });
+            var $xz = $("input[name=xz]:checked");
+            if ($xz.length==0){
+                alert("请选择要修改的数据");
+            }else if ($xz.length>1){
+                alert("只能修改一条数据");
+            }else {
+                var id = $xz.val();
+                $.ajax({
+                    url : "updateActivity",
+                    data : {
+                        "id":id,
+                    },
+                    type : "get",
+                    dataType : "json",
+                    success : function(data){
+                        //处理所有者的下拉框
+                        var html = "<option></option>";
+                        $.each(data.uList,function (i,n) {
+                            html +="<option value='"+n.id+"'>"+n.name+"</option>";
+                        })
+                        $("#edit-owner").html(html);
+                        //处理单条activity
+                        $("#edit-id").val(data.a.id);
+                        $("#edit-name").val(data.a.name);
+                        $("#edit-owner").val(data.a.owner);
+                        $("#edit-startDate").val(data.a.startData);
+                        $("#edit-endDate").val(data.a.endData);
+                        $("#edit-cost").val(data.a.cost);
+                        $("#edit-description").val(data.a.description);
+
+                        //所有值填写好之后,打开修改模态窗口
+                        $("#editActivityModal").modal("show");
+                    }
+                })
+            }
+        })
+
+        //为更新按钮绑定事件,执行市场活动修改操作
+        $("#updateBtn").click(function () {
+            $.ajax({
+                url: "update",
+                data :{
+                    "id" : $.trim($("#edit-id").val()),
+                    "owner" : $.trim($("#edit-owner").val()),
+                    "name" : $.trim($("#edit-name").val()),
+                    "startDate" : $.trim($("#edit-startDate").val()),
+                    "endDate" : $.trim($("#edit-endDate").val()),
+                    "cost" : $.trim($("#edit-cost").val()),
+                    "description" : $.trim($("#edit-description").val()),
+                },
+                type: "post",
+                dataType: "json",
+                success : function (data) {
+                    //console.log(data)
+                    if (data==true){
+                        //修改成功后
+                        //刷新市场活动信息列表(局部刷新)
+                        //pageList(1,2);
+
+                        /*
+                        * 修改操作后,应维持当前页维持每页展现记录数
+                        * */
+                        pageList($("#activityPage").bs_pagination('getOption', 'currentPage')
+                                ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                        //关闭修改模态窗口
+                        $("#editActivityModal").modal("hide");
+                    }else {
+                        alert("修改市场活动失败")
+                    }
+                }
+            })
         })
 	});
 	/*
@@ -301,44 +402,49 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<div class="modal-body">
 				
 					<form class="form-horizontal" role="form">
-					
+
+                        <input type="hidden" id="edit-id"/>
+
 						<div class="form-group">
 							<label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="edit-marketActivityOwner">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+								<select class="form-control" id="edit-owner">
+
 								</select>
 							</div>
                             <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-marketActivityName" value="发传单">
+                                <input type="text" class="form-control" id="edit-name" value="发传单">
                             </div>
 						</div>
 
 						<div class="form-group">
 							<label for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-startTime" value="2020-10-10">
+								<input type="text" class="form-control time" id="edit-startDate" >
 							</div>
 							<label for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-endTime" value="2020-10-20">
+								<input type="text" class="form-control time" id="edit-endDate" >
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="edit-cost" class="col-sm-2 control-label">成本</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-cost" value="5,000">
+								<input type="text" class="form-control" id="edit-cost">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+                                <!--
+                                    关于文本域textarea:
+                                    (1)一定要以标签队的形式出现,正常状态下标签对要紧紧挨着
+                                    (2)textarea虽然是以标签对的形式出现,但他也是属于表单元素范畴
+                                    -->
+								<textarea class="form-control" rows="3" id="edit-description"></textarea>
 							</div>
 						</div>
 						
@@ -347,7 +453,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="updateBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -403,7 +509,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				

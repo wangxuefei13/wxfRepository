@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface UserDao {
     List<User> getOne();
+
+    //List<User> getUserList();
 }

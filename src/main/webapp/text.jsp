@@ -16,6 +16,23 @@
     <title>Title</title>
 </head>
 <body>
+    <!--
+        add:打开修改模态窗口
+        save:执行添加操作
+        edit:跳转到修改页面(打开修改模态窗口)
+        update:执行修改操作
+    -->
 
+    $.ajax({
+        url : "",
+        data : {
+
+        },
+        type : "",
+        dataType : "json",
+        success : function(data){
+
+        }
+    })
 </body>
 </html>
