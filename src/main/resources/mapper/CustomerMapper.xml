@@ -3,8 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crm.dao.CustomerDao">
-    <insert id="addCustomer" parameterType="com.crm.entity.Customer">
-        insert into tbl_customer (id,owner,name,website,phone,description,contactSummary,nextContactTime,address) values (#{id},#{owner},#{name},
-        #{website},#{phone},#{description},#{contacaSummary},#{nextContactTime},#{address})
+    <insert id="add"  parameterType="com.crm.entity.Customer">
+        insert into tbl_customer (
+            id,owner,name,website,phone,contactSummary,nextContactTime,description,address,createTime,createBy
+        ) values (#{id},#{owner},#{name},#{website},#{phone},#{contactSummary},#{nextContactTime},#{description},#{address},#{createTime},#{createBy})
     </insert>
 </mapper>

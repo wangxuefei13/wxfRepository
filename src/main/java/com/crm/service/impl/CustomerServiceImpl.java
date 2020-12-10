@@ -8,16 +8,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
     @Autowired
     private CustomerDao customerDao;
 
+
     @Override
-    public boolean addCustomer(Customer customer) {
-        boolean succ = true;
-        int count =customerDao.addCustomer(customer);
+    public boolean add(Customer customer) {
+        boolean flag = true;
+        int count =customerDao.add(customer);
+
         if (count!=1){
-            succ = false;
+            flag = false;
         }
-        return  succ;
+        return flag;
     }
 }

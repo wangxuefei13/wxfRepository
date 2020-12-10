@@ -2,10 +2,16 @@ package com.crm.service.impl;
 
 import com.crm.dao.ActivityDao;
 import com.crm.dao.ActivityRemarkDao;
+import com.crm.dao.UserDao;
 import com.crm.entity.Activity;
+import com.crm.entity.User;
 import com.crm.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -13,6 +19,9 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityDao activityDao;
     @Autowired
     private ActivityRemarkDao activityRemarkDao;
+
+    @Autowired
+    private UserDao userDao;
 
     /**
      * 添加
@@ -25,9 +34,9 @@ public class ActivityServiceImpl implements ActivityService {
         int count =activityDao.save(activity);
         if (count!=1){
             flag = false;
-    }
+        }
         return  flag;
-    }
+        }
 
     /**
      * 删除
@@ -52,4 +61,30 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return flag;
     }
+
+    @Override
+    public Map<String, Object> update(String id) {
+
+        //取uList
+        List<User> uList = userDao.getOne();
+        //取a
+        Activity a = activityDao.getById(id);
+        //将uList和a打包到map中
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("uList",uList);
+        map.put("a",a);
+        //返回map
+        return map;
+    }
+
+    @Override
+    public boolean updateActivity(Activity activity) {
+        boolean flag = true;
+        int count =activityDao.updateActivity(activity);
+        if (count!=1){
+            flag = false;
+        }
+        return  flag;
+    }
+
 }
