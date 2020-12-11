@@ -15,5 +15,6 @@
 		<mapper resource="mapper/CustomerMapper.xml" />
 		<mapper resource="mapper/Dic_ValueMapper.xml" />
 		<mapper resource="mapper/CustomerMapper.xml"/>
+		<mapper resource="mapper/Tbl_tranMapper.xml"/>
 	</mappers>
 </configuration>

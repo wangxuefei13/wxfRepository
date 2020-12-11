@@ -23,78 +23,73 @@
             getCharts();
         })
         function getCharts() {
+            console.log("哈哈哈")
             // 基于准备好的dom，初始化echarts实例
             $.ajax({
-                url:"",
-                data: {
-
-
-                },
-                type:"",
+                url:"chart",
+                type:"get",
                 dataType:"json",
                 success:function (data) {
+                    var myChart = echarts.init(document.getElementById('main'));
+                    option = {
+                        title: {
+                            text: '交易漏斗图',
+                            subtext: '统计交易阶段数量的漏斗图'
+                        },
+                        series: [
+                            {
+                                name:'交易漏斗图',
+                                type:'funnel',
+                                left: '10%',
+                                top: 60,
+                                //x2: 80,
+                                bottom: 60,
+                                width: '80%',
+                                // height: {totalHeight} - y - y2,
+                                min: 0,
+                                max: data.total,
+                                minSize: '0%',
+                                maxSize: '100%',
+                                sort: 'descending',
+                                gap: 2,
+                                label: {
+                                    show: true,
+                                    position: 'inside'
+                                },
+                                labelLine: {
+                                    length: 10,
+                                    lineStyle: {
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+                                },
+                                itemStyle: {
+                                    borderColor: '#fff',
+                                    borderWidth: 1
+                                },
+                                emphasis: {
+                                    label: {
+                                        fontSize: 20
+                                    }
+                                },
+                                data: data.dataList,
+                            }
+                        ]
+                    };
 
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
                 }
 
-            })
-
-            var myChart = echarts.init(document.getElementById('main'));
-            option = {
-                title: {
-                    text: '交易漏斗图',
-                    subtext: '统计交易阶段数量的漏斗图'
-                },
-                series: [
-                    {
-                        name:'交易漏斗图',
-                        type:'funnel',
-                        left: '10%',
-                        top: 60,
-                        //x2: 80,
-                        bottom: 60,
-                        width: '80%',
-                        // height: {totalHeight} - y - y2,
-                        min: 0,
-                        max: 100,
-                        minSize: '0%',
-                        maxSize: '100%',
-                        sort: 'descending',
-                        gap: 2,
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        labelLine: {
-                            length: 10,
-                            lineStyle: {
-                                width: 1,
-                                type: 'solid'
-                            }
-                        },
-                        itemStyle: {
-                            borderColor: '#fff',
-                            borderWidth: 1
-                        },
-                        emphasis: {
-                            label: {
-                                fontSize: 20
-                            }
-                        },
-                        data: [
-                            {value: 60, name: '访问'},
-                            {value: 40, name: '咨询'},
-                            {value: 20, name: '订单'},
-                            {value: 80, name: '点击'},
-                            {value: 100, name: '展现'}
-                        ]
-                    }
-                ]
-            };
 
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        }
+
+                })
+
+            }
+
+
 
     </script>
 </head>

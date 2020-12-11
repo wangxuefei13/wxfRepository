@@ -41,7 +41,7 @@ public class LoginController {
             request.getSession().setAttribute(key,map.get(key));
             System.out.println(key);
         }
-
+        System.out.println("缓存结束");
 
         String md5 = MD5UTils.getMD5(loginPwd);
         User user = null;
