@@ -1,5 +1,6 @@
 package com.crm.controller;
 
+
 import com.crm.entity.Activity;
 import com.crm.entity.User;
 import com.crm.service.ActivityService;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +34,8 @@ public class ActivityController {
      * @return
      */
     @RequestMapping("/getPersonList")
-    public @ResponseBody List<User> getPersonList(){
+    public @ResponseBody
+    List<User> getPersonList(){
         List<User> one = userService.getOne();
         return one;
     }
@@ -43,7 +48,7 @@ public class ActivityController {
     @ResponseBody
     public boolean save(Activity activity, HttpServletRequest request){
         //添加数据库id
-        String id =UUIDUtils.getEncryption_ID("uu");
+        String id = UUIDUtils.getEncryption_ID("uu");
         //当前添加的时间
         String createTime = DateTimeUtils.getSysTime();
         //当前登录用户
@@ -76,7 +81,7 @@ public class ActivityController {
     private Map<String, Object> updateActivity(HttpServletRequest request){
         String id =request.getParameter("id");
         Map<String,Object> map =activityService.update(id);
-        System.out.println(map);
+        //System.out.println(map);
         return map;
     }
 
@@ -99,5 +104,17 @@ public class ActivityController {
         activity.setCreateBy(editBy);
         boolean flag =activityService.updateActivity(activity);
         return flag;
+    }
+
+    /**
+     * 跳转到详细信息页的操作
+     */
+    @RequestMapping("/detail")
+    private void detail(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String id =request.getParameter("id");
+        Activity a = activityService.detail(id);
+        System.out.println(a);
+        request.setAttribute("a",a);
+        request.getRequestDispatcher("/workbench/activity/detail.jsp").forward(request,response);
     }
 }

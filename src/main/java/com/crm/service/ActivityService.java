@@ -11,4 +11,6 @@ public interface ActivityService {
     Map<String, Object> update(String id);
 
     boolean updateActivity(Activity activity);
+
+    Activity detail(String id);
 }
