@@ -3,9 +3,63 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crm.dao.CustomerDao">
+    <update id="updateCustomer">
+        update tbl_customer set
+
+        owner=#{owner},
+        name=#{name},
+        website=#{website},
+        phone=#{phone},
+        description=#{description},
+        contactSummary=#{contactSummary},
+
+        nextContactTime=#{nextContactTime},
+        address=#{address},
+        editTime=#{editTime},
+        editBy=#{editBy}
+
+        where id=#{id}
+
+    </update>
+
+    <select id="getById"  resultType="com.crm.entity.Customer">
+        select * from tbl_customer where id =#{id}
+    </select>
+
+
     <insert id="add"  parameterType="com.crm.entity.Customer">
         insert into tbl_customer (
             id,owner,name,website,phone,contactSummary,nextContactTime,description,address,createTime,createBy
         ) values (#{id},#{owner},#{name},#{website},#{phone},#{contactSummary},#{nextContactTime},#{description},#{address},#{createTime},#{createBy})
     </insert>
+
+    <delete id="delete">
+
+        delete from tbl_customer
+
+        where id in
+
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="detail" resultType="Customer">
+        select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.phone,
+        a.website,
+        a.nextContactTime,
+        a.description,
+        a.createTime,
+        a.createBy,
+        a.editTime,
+        a.editBy
+        from tbl_customer a
+        join tbl_user u
+        on a.owner=u.id
+
+        where a.id=#{id}
+    </select>
 </mapper>

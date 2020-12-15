@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CustomerController {
@@ -52,6 +53,51 @@ public class CustomerController {
         return flag;
     }
 
+    /**
+     *删除数据
+     * @return
+     */
+    @RequestMapping("/deleteCust")
+    @ResponseBody
+    private boolean delete(HttpServletRequest request){
+        String ids[] = request.getParameterValues("id");
+        boolean flag = customerService.delete(ids);
+        return flag;
+    }
+
+
+    /**
+     * 修改数据
+     * @return
+     */
+    @RequestMapping("/updateCustomer")
+    public Map<String, Object> updateCust(HttpServletRequest request){
+        String id =request.getParameter("id");
+        System.out.println("jinru ,updatr");
+        Map<String, Object> map = customerService.update(id);
+        System.out.println("进入customerCOn"+map);
+        return map;
+    }
+    /**
+     * 市场活动修改操作
+     */
+    @RequestMapping("/updatea")
+    @ResponseBody
+    public boolean update(Customer customer, HttpServletRequest request){
+
+        String id =request.getParameter("id");
+        //当前修改的时间
+
+        String editTime = DateTimeUtils.getSysTime();
+        //当前修改用户
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        customer.setId(id);
+        customer.setCreateTime(editTime);
+        customer.setCreateBy(editBy);
+        boolean flag =customerService.updateCust(customer);
+        return flag;
+    }
 
 
 
