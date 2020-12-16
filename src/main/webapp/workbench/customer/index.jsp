@@ -116,7 +116,7 @@
                             dataType:"json",
                             success:function(data){
                                 if (data.success){
-                                    alert("删除市场活动失败");
+                                    alert("删除客户失败");
                                 }else {
                                     //删除成功后
                                     // pageList(1,2);
@@ -243,7 +243,7 @@
                             //关闭修改模态窗口
                             $("#editCustomerModal").modal("hide");
                         }else {
-                            alert("修改市场活动失败")
+                            alert("修改客户信息失败")
                         }
                     }
                 })

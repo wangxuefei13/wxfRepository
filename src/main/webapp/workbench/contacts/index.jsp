@@ -97,7 +97,7 @@
                 "name":$.trim($("#search-name").val()),
                 "customerId":$.trim($("#search-customerId").val()),
                 "source":$.trim($("#search-source").val()),
-                "birth":$.trim($("#search-birth").val())
+                "birth":$.trim($("#search-birth").val()),
             },
             type : "get",
             dataType : "json",
@@ -105,7 +105,7 @@
                 var html = "";
                 //每一个n就是每一个联系人对象
                 $.each(data.dataList,function (i,n) {
-                    html += '<tr class="active">';
+                    html += '<tr class="contact">';
                     html += '<td><input type="checkbox" value="'+n.id+'"/></td>';
                     html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.html\';">'+n.name+'</a></td>';
                     html += '<td>'+n.customerId+'</td>';

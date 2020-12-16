@@ -78,7 +78,7 @@ public class ContactsController {
         map.put("source",source);
         map.put("birth",birth);
         map.put("skipCount",skipCount);
-        map.put("pageNo1",pageNo1);
+        map.put("pageSize1",pageSize1);
         PaginationVO<Contacts> vo = contactsService.paging(map);
         return vo;
     }
