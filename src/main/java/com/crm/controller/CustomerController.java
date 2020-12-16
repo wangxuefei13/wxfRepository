@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -73,32 +76,43 @@ public class CustomerController {
     @RequestMapping("/updateCustomer")
     public Map<String, Object> updateCust(HttpServletRequest request){
         String id =request.getParameter("id");
-        System.out.println("jinru ,updatr");
+        System.out.println(id);
         Map<String, Object> map = customerService.update(id);
         System.out.println("进入customerCOn"+map);
         return map;
     }
     /**
-     * 市场活动修改操作
+     * 客户修改操作
      */
     @RequestMapping("/updatea")
     @ResponseBody
-    public boolean update(Customer customer, HttpServletRequest request){
+    public boolean updatea(Customer customer, HttpServletRequest request){
 
-        String id =request.getParameter("id");
+        String id = request.getParameter("id");
+//        System.out.println("id-----------------"+id);
+
         //当前修改的时间
-
         String editTime = DateTimeUtils.getSysTime();
         //当前修改用户
         String editBy = ((User)request.getSession().getAttribute("user")).getName();
 
-        customer.setId(id);
-        customer.setCreateTime(editTime);
-        customer.setCreateBy(editBy);
+//        customer.setId(id);
+        customer.setEditTime(editTime);
+        customer.setEditBy(editBy);
+
         boolean flag =customerService.updateCust(customer);
+        //System.out.println(flag);
         return flag;
     }
 
+@RequestMapping("/detail1")
+    public void detail(HttpServletRequest request ,HttpServletResponse response) throws ServletException, IOException {
+    String id =request.getParameter("id");
+    Customer c = customerService.detail(id);
+    System.out.println(c);
+    request.setAttribute("c",c);
+    request.getRequestDispatcher("/workbench/customer/detail.jsp").forward(request,response);
+    }
 
 
 }

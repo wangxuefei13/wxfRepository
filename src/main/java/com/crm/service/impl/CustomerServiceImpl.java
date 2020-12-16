@@ -2,6 +2,7 @@ package com.crm.service.impl;
 
 import com.crm.dao.CustomerDao;
 import com.crm.dao.UserDao;
+import com.crm.entity.Activity;
 import com.crm.entity.Customer;
 import com.crm.entity.User;
 import com.crm.service.CustomerService;
@@ -17,6 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
     private UserDao userDao;
 
     @Override
@@ -37,8 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
         //删除市场活动
         int count3 = customerDao.delete(ids);
 
-        if (count3!=ids.length){
-            flag = false;
+            if (count3!=ids.length){
+                flag = false;
         }
         return flag;
     }
@@ -61,11 +63,24 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean updateCust(Customer customer) {
         boolean flag = true;
-        int count =customerDao.updateCust(customer);
-        if (count!=1){
-            flag = false;
+        System.out.println(customer);
+        try{ int count =customerDao.updateCust(customer);
+            if (count!=1){
+                flag = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
+
         return  flag;
+    }
+
+    @Override
+    public Customer detail(String id) {
+        Customer c = customerDao.detail(id);
+        return c;
     }
 
 

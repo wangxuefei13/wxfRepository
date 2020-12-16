@@ -5,14 +5,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+
     <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 
     <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
     <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
     <%--分页插件--%>
     <link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
@@ -277,7 +278,7 @@
                     $.each(data.dataList,function (i,n) {
                         html+='<tr class="customer">';
                         html+= '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
-                        html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail?id='+n.id+'\';">'+n.name+'</a></td>';
+                        html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail1?id='+n.id+'\';">'+n.name+'</a></td>';
                         html+='<td>'+n.owner+'</td>';
                         html+='<td>'+ n.phone+'</td>';
                         html+='<td>'+ n.website+'</td>';
@@ -409,7 +410,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
-
+                    <input type="hidden" id="edit-id" >
                     <div class="form-group">
                         <label for="edit-customerOwner" class="col-sm-2 control-ldeabel">所有者<span style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
@@ -447,13 +448,13 @@
                         <div class="form-group">
                             <label for="create-contactSummary1" class="col-sm-2 control-label">联系纪要</label>
                             <div class="col-sm-10" style="width: 81%;">
-                                <textarea class="form-control" rows="3" id="create-contactSummary1"></textarea>
+                                <textarea class="form-control" rows="3" id="edit-contactSummary1"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="create-nextContactTime2" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time" id="create-nextContactTime2">
+                                <input type="text" class="form-control time" id="edit-nextContactTime2">
                             </div>
                         </div>
                     </div>
@@ -464,7 +465,7 @@
                         <div class="form-group">
                             <label for="create-address" class="col-sm-2 control-label">详细地址</label>
                             <div class="col-sm-10" style="width: 81%;">
-                                <textarea class="form-control" rows="1" id="create-address"></textarea>
+                                <textarea class="form-control" rows="1" id="edit-address"></textarea>
                             </div>
                         </div>
                     </div>

@@ -15,4 +15,5 @@ public interface CustomerService {
 
     boolean updateCust(Customer customer);
 
+    Customer detail(String id);
 }

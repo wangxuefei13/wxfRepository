@@ -11,5 +11,9 @@ public interface CustomerDao {
 
     Customer getById(String id);
 
+
     int updateCust(Customer customer);
+
+    Customer detail(String id);
+
 }

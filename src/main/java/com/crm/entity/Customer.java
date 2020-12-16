@@ -8,9 +8,9 @@ public class Customer {
     private String phone;
     private String createBy;
     private String createTime;
-    private String editBY;
+    private String editBy;
     private String editTime;
-    private String contactSummary;
+    private String  contactSummary;
     private String nextContactTime;
     private String description;
     private String address;
@@ -71,12 +71,12 @@ public class Customer {
         this.createTime = createTime;
     }
 
-    public String getEditBY() {
-        return editBY;
+    public String getEditBy() {
+        return editBy;
     }
 
-    public void setEditBY(String editBY) {
-        this.editBY = editBY;
+    public void setEditBy(String editBy) {
+        this.editBy = editBy;
     }
 
     public String getEditTime() {
@@ -129,7 +129,7 @@ public class Customer {
                 ", phone='" + phone + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", createTime='" + createTime + '\'' +
-                ", editBY='" + editBY + '\'' +
+                ", editBy='" + editBy + '\'' +
                 ", editTime='" + editTime + '\'' +
                 ", contactSummary='" + contactSummary + '\'' +
                 ", nextContactTime='" + nextContactTime + '\'' +
