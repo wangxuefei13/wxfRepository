@@ -67,7 +67,7 @@ public class ActivityController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    private boolean delete(HttpServletRequest request){
+    public boolean delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
         boolean flag = activityService.delete(ids);
         return flag;
@@ -78,7 +78,7 @@ public class ActivityController {
      * @return
      */
     @RequestMapping("/updateActivity")
-    private Map<String, Object> updateActivity(HttpServletRequest request){
+    public Map<String, Object> updateActivity(HttpServletRequest request){
         String id =request.getParameter("id");
         Map<String,Object> map =activityService.update(id);
         //System.out.println(map);
@@ -100,8 +100,8 @@ public class ActivityController {
         String editBy = ((User)request.getSession().getAttribute("user")).getName();
 
         activity.setId(id);
-        activity.setCreateTime(editTime);
-        activity.setCreateBy(editBy);
+        activity.setEditTime(editTime);
+        activity.setEditBy(editBy);
         boolean flag =activityService.updateActivity(activity);
         return flag;
     }
@@ -110,7 +110,7 @@ public class ActivityController {
      * 跳转到详细信息页的操作
      */
     @RequestMapping("/detail")
-    private void detail(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    public void detail(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String id =request.getParameter("id");
         Activity a = activityService.detail(id);
         System.out.println(a);

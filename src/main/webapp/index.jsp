@@ -17,7 +17,7 @@
 </head>
 <body>
 	<script>
-		window.location.href="login.jsp";
+		window.location.href="login.html";
 	</script>
 </body>
 </html>

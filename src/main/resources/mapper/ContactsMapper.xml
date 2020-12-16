@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.ContactsDao">
+    <insert id="saveCts"  parameterType="com.crm.entity.Contacts">
+        insert into tbl_contacts
+        (id,owner,source,customerId,fullname,appellation,email,mphone,job,birth,createBy,createTime,description,contactSummary,nextContactTime,address)
+        values
+        (#{id},#{owner},#{source},#{customerId},#{fullname},#{appellation},#{email},#{mphone},#{job},#{birth},#{createBy},#{createTime},
+        #{description},#{contactSummary},#{nextContactTime},#{address})
+    </insert>
+    <select id="getToByCondition" resultType="int">
+        select count(*)
+        from tbl_contacts a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.fullname like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerId!=null and customerId!=''">
+                and a.customerId like '%' #{customerId} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                and a.source like '%' #{source} '%'
+            </if>
+            <if test="birth!=null and birth!=''">
+                and a.birth like '%' #{birth} '%'
+            </if>
+        </where>
+    </select>
+    <select id="getContactsListByCondition" resultType="com.crm.entity.Contacts">
+        select
+        a.id,
+        a.fullname,
+        u.name as owner,
+        a.customerId,
+        a.source,
+        a.birth
+        from tbl_contacts a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.fullname like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerId!=null and customerId!=''">
+                and a.customerId like '%' #{customerId} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                and a.source like '%' #{source} '%'
+            </if>
+            <if test="birth!=null and birth!=''">
+                and a.birth like '%' #{birth} '%'
+            </if>
+        </where>
+        order by a.createTime desc
+        limit #{skipCount},#{pageSize1}
+    </select>
+</mapper>

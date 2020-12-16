@@ -17,10 +17,10 @@ public class PagingServiceImpl implements PagingService {
     private PagingDao pagingDao;
     @Override
     public PaginationVO<Activity> paging(Map<String, Object> map) {
-        System.out.println("进入service"+map);
+        //System.out.println("进入service"+map);
         //获取dataList
         List<Activity> dataList = pagingDao.getActivityListByCondition(map);
-        System.out.println("获取dataList"+dataList);
+        //System.out.println("获取dataList"+dataList);
         //获取total
         int total = pagingDao.getTotalByCondition(map);
         //获取total和获取dataList封装到vo中

@@ -18,5 +18,6 @@
 		<mapper resource="mapper/Tbl_tranMapper.xml"/>
 		<mapper resource="mapper/ClueMapper.xml" />
 		<mapper resource="mapper/CustomerPageMapper.xml"/>
+		<mapper resource="mapper/ContactsMapper.xml" />
 	</mappers>
 </configuration>
