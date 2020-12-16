@@ -23,7 +23,14 @@
 
         $(function(){
             $("#addBtn").click(function () {
-
+                $(".time").datetimepicker({
+                    minView: "month",
+                    language:  'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    autoclose: true,
+                    todayBtn: true,
+                    pickerPosition: "bottom-left"
+                });
                 $.ajax({
                     url : "getPersonList",
                     type : "get",
@@ -156,7 +163,14 @@
 
             //为修改按钮绑定事件,打开修改模态窗口
             $("#updateBtn").click(function () {
-
+                $(".time").datetimepicker({
+                    minView: "month",
+                    language:  'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    autoclose: true,
+                    todayBtn: true,
+                    pickerPosition: "bottom-left"
+                });
                 var $xz = $("input[name=xz]:checked");
 
                 if ($xz.length==0){
@@ -260,7 +274,7 @@
             $("#qx").prop("checked",false);
 
             $.ajax({
-                url :"pageList",
+                url :"pageListe",
                 data: {
 
                     "pageNo":pageNo,

@@ -8,8 +8,9 @@ import java.util.Map;
 @Repository
 public interface ContactsDao {
     int saveCts(Contacts contacts);
-    
-    int getToByCondition(Map<String, Object> map);
 
     List<Contacts> getContactsListByCondition(Map<String, Object> map);
+    int getToByCondition(Map<String, Object> map);
+
+
 }

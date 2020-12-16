@@ -16,7 +16,7 @@ import java.util.Map;
 public class CustomerPage {
     @Autowired
     private CustomerPageService customerPageService;
-    @RequestMapping("/pageList")
+    @RequestMapping("/pageListe")
     public @ResponseBody PaginationVO<Customer> cust(String pageNo, String pageSize,
                                                      @RequestParam(value = "name",required = false)String name,
                                                      @RequestParam(value = "owner",required = false)String owner,
