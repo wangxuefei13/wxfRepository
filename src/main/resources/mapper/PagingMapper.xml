@@ -12,7 +12,7 @@
 				a.name like '%' #{name} '%'
 			</if>
 			<if test="owner!=null and owner!=''">
-				and a.name like '%' #{owner} '%'
+				and u.name like '%' #{owner} '%'
 			</if>
 			<if test="startDate!=null and startDate!=''">
 				and a.startDate &gt; #{startDate}
@@ -37,7 +37,7 @@
 				a.name like '%' #{name} '%'
 			</if>
 			<if test="owner!=null and owner!=''">
-				and a.name like '%' #{owner} '%'
+				and u.name like '%' #{owner} '%'
 			</if>
 			<if test="startDate!=null and startDate!=''">
 				and a.startDate &gt; #{startDate}
