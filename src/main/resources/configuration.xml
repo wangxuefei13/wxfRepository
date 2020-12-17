@@ -19,5 +19,6 @@
 		<mapper resource="mapper/ClueMapper.xml" />
 		<mapper resource="mapper/CustomerPageMapper.xml"/>
 		<mapper resource="mapper/ContactsMapper.xml" />
+		<mapper resource="mapper/DetailMapper.xml" />
 	</mappers>
 </configuration>

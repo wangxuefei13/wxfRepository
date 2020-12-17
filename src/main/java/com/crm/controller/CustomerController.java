@@ -109,7 +109,7 @@ public class CustomerController {
     public void detail(HttpServletRequest request ,HttpServletResponse response) throws ServletException, IOException {
     String id =request.getParameter("id");
     Customer c = customerService.detail(id);
-    System.out.println(c);
+    //System.out.println(c);
     request.setAttribute("c",c);
     request.getRequestDispatcher("/workbench/customer/detail.jsp").forward(request,response);
     }

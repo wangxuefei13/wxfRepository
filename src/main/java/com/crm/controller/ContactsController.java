@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,11 +61,23 @@ public class ContactsController {
         boolean flag = contactsService.saveCts(contacts);
         return flag;
     }
+
+    /**
+     * 查询列表
+     * @param pageNo
+     * @param pageSize
+     * @param owner
+     * @param fullname
+     * @param customerId
+     * @param source
+     * @param birth
+     * @return
+     */
     @RequestMapping("/pageList")
     public @ResponseBody
     PaginationVO<Contacts> pageList(String pageNo,String pageSize,
         @RequestParam(value = "owner", required = false) String owner,
-        @RequestParam(value = "name", required = false) String name,
+        @RequestParam(value = "fullname", required = false) String fullname,
         @RequestParam(value = "customerId", required = false)String customerId,
         @RequestParam(value = "source", required = false)String source,
         @RequestParam(value = "birth", required = false)String birth){
@@ -73,7 +88,7 @@ public class ContactsController {
         int skipCount=(pageNo1-1)*pageSize1;
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("owner",owner);
-        map.put("name",name);
+        map.put("fullname",fullname);
         map.put("customerId",customerId);
         map.put("source",source);
         map.put("birth",birth);
@@ -81,5 +96,62 @@ public class ContactsController {
         map.put("pageSize1",pageSize1);
         PaginationVO<Contacts> vo = contactsService.paging(map);
         return vo;
+    }
+
+    /**
+     * 删除
+     * @param request
+     * @return
+     */
+    @RequestMapping("/deleteCon")
+    @ResponseBody
+    public boolean deleteCon(HttpServletRequest request){
+        String ids[] = request.getParameterValues("id");
+        boolean flag = contactsService.delete(ids);
+        return flag;
+    }
+
+    /***
+     * 修改
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateContacts")
+    public Map<String, Object> updateContacts(HttpServletRequest request){
+        String id =request.getParameter("id");
+        Map<String,Object> map =contactsService.update(id);
+        //System.out.println(map);
+        return map;
+    }
+
+    @RequestMapping("/updatecont")
+    @ResponseBody
+    public boolean updatecont(Contacts contacts, HttpServletRequest request){
+        String id =request.getParameter("id");
+        String editTime = DateTimeUtils.getSysTime();
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        contacts.setId(id);
+        contacts.setEditTime(editTime);
+        contacts.setEditBy(editBy);
+
+        boolean flag =contactsService.updateContactts(contacts);
+        return flag;
+    }
+
+    /**
+     * 跳转详细信息
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping("/detaill")
+    public void detaill(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String id =request.getParameter("id");
+        Contacts a = contactsService.detail(id);
+        //System.out.println(a);
+        request.setAttribute("a",a);
+        request.getRequestDispatcher("/workbench/contacts/detail.jsp").forward(request,response);
     }
 }

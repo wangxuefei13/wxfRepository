@@ -113,7 +113,7 @@ public class ActivityController {
     public void detail(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String id =request.getParameter("id");
         Activity a = activityService.detail(id);
-        System.out.println(a);
+        //System.out.println(a);
         request.setAttribute("a",a);
         request.getRequestDispatcher("/workbench/activity/detail.jsp").forward(request,response);
     }

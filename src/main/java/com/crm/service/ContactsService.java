@@ -10,4 +10,12 @@ public interface ContactsService {
     boolean saveCts(Contacts contacts);
 
     PaginationVO<Contacts> paging(Map<String, Object> map);
+
+    boolean delete(String[] ids);
+
+    Map<String, Object> update(String id);
+
+    boolean updateContactts(Contacts contacts);
+
+    Contacts detail(String id);
 }
